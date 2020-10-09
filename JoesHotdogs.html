@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset = "utf-8">
+	<title>Joe's Hotdogs|Comp20 HW5a</title>
+</head>
+	<body>
+		<h1>Welcome to Joe's Hotdogs!</h1>
+		<h2>Your Order:</h2>
+		<br>	
+	</body>
+	<script type="text/javascript">
+
+		//This function checks for "valid input" - whole #s only
+		//We don't accept letters, spaces, negative #s, floats
+		function isValidInput(str) 
+		{
+			if (isNaN(str)) //value of the input is not a number --> invalid
+			{
+			 	return false; 
+			}
+			else
+			{
+				return (parseFloat(str) % 1 === 0 && parseInt(str) >= 0);
+				//Now we know the input is a number.
+				//In order for the input to be valid it must meet two conditions:
+				//	1) It must be a whole number, 2) It must be at least 0
+			}
+		}
+
+		//let's get the # of hotdogs
+		var input;
+		input = prompt("How many hotdogs?");
+
+		// if user gives a number >= 0 or an invalid answer, ask again
+		while (!isValidInput(input)) 
+		{
+			input = prompt("Please enter a valid # of hotdogs: ");
+		}
+
+		var numHotDogs = parseInt(input);
+		
+		//let's get the # of fries
+		input = prompt("How many fries?");
+		while (!isValidInput(input)) 
+		{
+			input = prompt("Please enter a valid # of fries: ");
+		}
+		var numFries = parseInt(input);
+
+		//let's get the # of sodas
+		input = prompt("How many sodas?");
+		while (!isValidInput(input)) 
+		{
+			input = prompt("Please enter a valid # of sodas: ");
+		}
+		var numSodas = parseInt(input);
+
+		var PriceHotDog = 3.25;
+		var PriceFries = 2.00;
+		var PriceSodas = 1.50;
+		var discount = 0.1;
+		var tax = 0.0625;
+
+		//let's calculate subtotal
+		var totalBeforeTax = (numHotDogs * PriceHotDog) + (numFries * PriceFries) + (numSodas * PriceSodas);
+
+		var HotDogTotal = numHotDogs * PriceHotDog;
+		var FriesTotal = numFries * PriceFries;
+		var SodaTotal = numSodas * PriceSodas;
+		var MealTax = totalBeforeTax * tax;
+
+		//Displaying order info
+		document.write("# Hotdogs: " + numHotDogs + " at $" + PriceHotDog + " is $" + HotDogTotal.toFixed(2));
+		document.write("<br>");
+		document.write("# Fries: " + numFries + " at $" + PriceFries.toFixed(2) + " is $" + FriesTotal.toFixed(2));
+		document.write("<br>");
+		document.write("# Sodas: " + numSodas + " at $" + PriceSodas.toFixed(2) + " is $" + SodaTotal.toFixed(2));
+		document.write("<br>");
+
+		//let's see if subtotal qualifies for discount and apply accordingly
+		if (totalBeforeTax >= 20.00)
+		{
+			var newTotal = totalBeforeTax - (totalBeforeTax * discount);
+			MealTax = newTotal * tax;
+			document.write("You qualified for our 10% discount!");
+			document.write("<br>");
+			document.write("Subtotal: $" + newTotal.toFixed(2));
+			document.write("<br>");
+			document.write("Meals Tax: $" + MealTax.toFixed(2));
+			document.write("<br>");
+			
+			var NewTotalAfterTax;
+			NewTotalAfterTax = newTotal + MealTax;
+			document.write("Total: $" + NewTotalAfterTax.toFixed(2));
+		}
+
+		else
+		{
+			document.write("Subtotal: $" + totalBeforeTax.toFixed(2));
+			document.write("<br>");
+			document.write("Meals Tax: $" + MealTax.toFixed(2));
+			document.write("<br>");
+			var totalAfterTax;
+
+			//let's add tax
+			totalAfterTax = totalBeforeTax + (totalBeforeTax * tax);
+
+			document.write("Total: $" + totalAfterTax.toFixed(2));
+		}
+	</script>
+</html>
